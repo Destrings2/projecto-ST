@@ -1,0 +1,11 @@
+main: a := 0
+      b := 5
+      uno := 1
+      c := b + uno
+      a := b * c
+      writeInt(a)
+end:  halt
+equ a M[0]
+equ b M[1]
+equ c M[2]
+equ uno M[3]
