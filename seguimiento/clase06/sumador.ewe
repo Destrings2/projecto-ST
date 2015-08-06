@@ -1,0 +1,19 @@
+main:
+    one := 1
+    i := 1
+    temp := 0
+    readInt(a)
+
+    loop: if i > a then goto end
+	temp := temp + i
+	i := i + one
+	goto loop
+    end:
+    
+    writeInt(temp)
+    halt
+
+equ one M[0]
+equ i M[2]
+equ a M[3]
+equ temp M[4]
