@@ -1,0 +1,36 @@
+i := 0
+converter := 32
+a := 97
+z := 122
+zero := 0
+one := 1
+
+strSize := 30
+readStr(str, strSize)
+
+goto main
+
+loop:
+i := i + one
+main:
+char := M[i+8]
+if char = zero then goto end
+    if char > z then goto loop
+        if char < a then goto loop
+	    char := char - converter
+	    M[i + 8] := char
+	    goto loop
+	    
+end:
+writeStr(str)
+halt
+
+equ i M[0]
+equ char M[1]
+equ converter M[2]
+equ a M[3]
+equ z M[4]
+equ zero M[5]
+equ one M[6]
+equ strSize M[7]
+equ str M[8]
