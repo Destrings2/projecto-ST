@@ -1,0 +1,107 @@
+# Implementacion de funciones dentro de ewe
+
+# ====Especificacion=====
+
+# Se usara un stack de 251 posciones desde M[250] - M[500]
+# Se tendra un puntero al valor tope del stack (SP) y un puntero a una posicion del stack (BP) en M[501] y M[502] respectivamente
+# Se usaran 5 registros: A, B, C, D, E en M[244] - M[248] respectivamente
+# Se usara ret (M[249]) para guardar el PC y regresar a el
+
+# push:
+# Se pondra el valor del registro A en el stack y se aumentara BP
+
+# pop:
+# Se sacara un elemento del stack y se pondra en el registro A, disminuyendo BP
+
+# ====Constantes=====
+
+zero := 0
+one := 1
+maxsize := 251
+
+ofmsg := "Error: Stack overflow\0"
+ufmsg := "Error: Stack underflow\0"
+
+# ====Inicializacion=
+
+SP := 0
+
+goto main
+
+# ====Codigo base====
+
+push:
+    M[SP + 250] := A
+    SP := SP + one
+    if SP > maxsize then goto overflow
+    PC := ret
+
+pop:
+    A := M[SP + 250]
+    SP := SP - one
+    if SP < zero then goto underflow
+    PC := ret
+
+# ====Errores========
+
+overflow:
+    writeStr(ofmsg)
+    halt
+
+underflow:
+    writeStr(ufmsg)
+    halt
+
+# ====Codigo usuario=
+
+max:
+    A := M[BP + 1]
+    B := M[BP + 2]
+    if A > B then goto end_max
+    A := B
+    end_max:
+    SP := BP
+    PC := ret
+
+main:
+   readInt(a)
+   readInt(b)
+
+   BP := SP
+
+   A := a
+   ret := PC + 2
+   goto push
+
+   A := b
+   ret := PC + 2
+   goto push
+
+   ret := PC + 2
+   goto max
+
+   writeInt(A)
+
+# ====Equates base===
+
+equ A M[244]
+equ B M[245]
+equ C M[246]
+equ D M[247]
+equ E M[248]
+
+equ ret M[249]
+
+equ SP M[501]
+equ BP M[502]
+
+equ one M[503]
+equ ofmsg M[504]
+equ ufmsg M[526]
+equ maxsize M[549]
+equ zero M[550]
+
+# ====Equates usuario===
+
+equ a M[0]
+equ b M[1]
