@@ -1,23 +1,28 @@
-calc: calc.o scanner.o token.o ast.o parser.o calculator.o
-	g++ -g -o calc calc.o scanner.o token.o ast.o parser.o calculator.o
+all: calc
+
+OBJECTS=calc.o scanner.o token.o ast.o parser.o calculator.o
+CPPFLAGS=-g
+
+calc: $(OBJECTS)
+	g++ $(CPPFLAGS) -o $@ $(OBJECTS)
 
 calc.o: calc.cpp scanner.h token.h
-	g++ -g -c calc.cpp
+	g++ $(CPPFLAGS) -c $<
 
 calculator.o: calculator.cpp calculator.h parser.h ast.h
-	g++ -g -c calculator.cpp
+	g++ $(CPPFLAGS) -c $<
 
 scanner.o: scanner.cpp scanner.h token.h
-	g++ -g -c scanner.cpp
+	g++ $(CPPFLAGS) -c $<
 
 token.o: token.cpp token.h
-	g++ -g -c token.cpp
+	g++ $(CPPFLAGS) -c $<
 
 ast.o: ast.cpp ast.h
-	g++ -g -c ast.cpp
+	g++ $(CPPFLAGS) -c $<
 
 parser.o: parser.cpp parser.h
-	g++ -g -c parser.cpp
+	g++ $(CPPFLAGS) -c $<
 
 clean:
 	rm -f *.o
