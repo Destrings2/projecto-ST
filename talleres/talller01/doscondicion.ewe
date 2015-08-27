@@ -1,0 +1,24 @@
+main:
+  readInt(a)
+  readInt(b)
+
+  ten := 10
+  twen := 20
+
+  if a < ten then goto end
+    if b > twen then goto end
+       r := 1
+       goto pr
+  end:
+    r := 0
+
+pr:
+writeInt(r)
+halt
+
+equ a M[0]
+equ b M[1]
+equ c M[2]
+equ ten M[3]
+equ twen M[4]
+equ r M[5]
