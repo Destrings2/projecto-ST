@@ -1,0 +1,23 @@
+main:
+  readInt(a)
+  readInt(b)
+  readInt(c)
+
+  if a > b then goto else
+    r := b
+    goto endif 
+  else:
+    r := a
+
+  endif:
+  if r > c then goto end
+    r := c
+
+end:
+writeInt(r)
+halt
+
+equ a M[1]
+equ b M[2]
+equ c M[3]
+equ r M[4]
