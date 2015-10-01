@@ -23,7 +23,7 @@ int isDigit(char c) {
 }
 
 int isWhiteSpace(char c) {
-  return (c == ' ' || c == '\t' || c == '\n');
+  return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\a' || c == '\b' || c == '\v');
 }
 
 Scanner::Scanner(istream* in):

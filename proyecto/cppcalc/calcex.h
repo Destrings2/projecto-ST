@@ -1,9 +1,6 @@
-#ifndef evalex_h
-#define evalex_h
+#pragma once
 
 enum Exception {
   UnrecognizedToken, //Token in object file not recognized
   ParseError
 };
-
-#endif
