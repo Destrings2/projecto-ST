@@ -3,31 +3,32 @@
 #include <string>
 #include "calcex.h"
 #include "calculator.h"
+
 using namespace std;
 
-Calculator* calc;
+Calculator *calc;
 
-int main(int argc, char* argv[]) {
-   string line;
- 
-   try {
+int main(int argc, char *argv[]) {
+    string line;
 
-      cout << "Please enter a calculator expression: ";
+    try {
 
-      getline(cin, line);
-      // line + '\n';
+        cout << "Please enter a calculator expression: ";
 
-      calc = new Calculator();
+        getline(cin, line);
+        // line + '\n';
 
-      int result = calc->eval(line);
+        calc = new Calculator();
 
-      cout << "The result is " << result << endl;
+        int result = calc->eval(line);
 
-      delete calc;
+        cout << "The result is " << result << endl;
 
-   }
-   catch(Exception ex) {
-      cout << "Program Aborted due to exception!" << endl;
-   }
+        delete calc;
+
+    }
+    catch (Exception ex) {
+        cout << "Program Aborted due to exception!" << endl;
+    }
 }
    

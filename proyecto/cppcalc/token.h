@@ -1,38 +1,45 @@
 #pragma once
 
 #include <string>
+
 using namespace std;
 
 enum TokenType {
-   identifier,keyword,number,add,sub,times,divide,lparen,rparen,eof,unrecognized
+    identifier, keyword, number, add, sub, times, divide, lparen, rparen, eof, unrecognized
 };
 
 class Token {
 public:
 
-  Token();
-  Token(TokenType typ, int line, int col);
-  virtual ~Token();
+    Token();
 
-  TokenType getType() const;
-  int getLine() const;
-  int getCol() const;
-  virtual string getLex() const;
+    Token(TokenType typ, int line, int col);
+
+    virtual ~Token();
+
+    TokenType getType() const;
+
+    int getLine() const;
+
+    int getCol() const;
+
+    virtual string getLex() const;
 
 private:
-  TokenType type;
-  int line,col;
+    TokenType type;
+    int line, col;
 };
 
-class LexicalToken: public Token {
- public:
-   LexicalToken(TokenType typ, string* lex, int line, int col);
-   ~LexicalToken();
+class LexicalToken : public Token {
+public:
+    LexicalToken(TokenType typ, string *lex, int line, int col);
 
-   virtual string getLex() const;
+    ~LexicalToken();
 
- private:
-   string* lexeme;
+    virtual string getLex() const;
+
+private:
+    string *lexeme;
 };
 
 

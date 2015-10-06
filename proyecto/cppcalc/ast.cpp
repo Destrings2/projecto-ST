@@ -5,78 +5,95 @@
 // for debug information uncomment
 //#define debug
 
-AST::AST() {}
+AST::AST() { }
 
-AST::~AST() {}
+AST::~AST() { }
 
-BinaryNode::BinaryNode(AST* left, AST* right):
-   AST(),
-   leftTree(left),
-   rightTree(right)
-{}
+BinaryNode::BinaryNode(AST *left, AST *right) :
+        AST(),
+        leftTree(left),
+        rightTree(right) { }
 
 BinaryNode::~BinaryNode() {
 #ifdef debug
-   cout << "In BinaryNode destructor" << endl;
+    cout << "In BinaryNode destructor" << endl;
 #endif
 
-   try {
-      delete leftTree;
-   } catch (...) {}
+    try {
+        delete leftTree;
+    } catch (...) { }
 
-   try {
-      delete rightTree;
-   } catch(...) {}
-}
-   
-AST* BinaryNode::getLeftSubTree() const {
-   return leftTree;
+    try {
+        delete rightTree;
+    } catch (...) { }
 }
 
-AST* BinaryNode::getRightSubTree() const {
-   return rightTree;
+AST *BinaryNode::getLeftSubTree() const {
+    return leftTree;
 }
 
-UnaryNode::UnaryNode(AST* sub):
-   AST(),
-   subTree(sub)
-{}
+AST *BinaryNode::getRightSubTree() const {
+    return rightTree;
+}
+
+UnaryNode::UnaryNode(AST *sub) :
+        AST(),
+        subTree(sub) { }
 
 UnaryNode::~UnaryNode() {
 #ifdef debug
-   cout << "In UnaryNode destructor" << endl;
+    cout << "In UnaryNode destructor" << endl;
 #endif
 
-   try {
-      delete subTree;
-   } catch (...) {}
-}
-   
-AST* UnaryNode::getSubTree() const {
-   return subTree;
+    try {
+        delete subTree;
+    } catch (...) { }
 }
 
-AddNode::AddNode(AST* left, AST* right):
-   BinaryNode(left,right)
-{}
+AST *UnaryNode::getSubTree() const {
+    return subTree;
+}
+
+AddNode::AddNode(AST *left, AST *right) :
+        BinaryNode(left, right) { }
 
 int AddNode::evaluate() {
-   return getLeftSubTree()->evaluate() + getRightSubTree()->evaluate();
+    return getLeftSubTree()->evaluate() + getRightSubTree()->evaluate();
 }
 
-SubNode::SubNode(AST* left, AST* right):
-   BinaryNode(left,right)
-{}
+SubNode::SubNode(AST *left, AST *right) :
+        BinaryNode(left, right) { }
 
 int SubNode::evaluate() {
-   return getLeftSubTree()->evaluate() - getRightSubTree()->evaluate();
+    return getLeftSubTree()->evaluate() - getRightSubTree()->evaluate();
 }
 
 NumNode::NumNode(int n) :
-   AST(),
-   val(n)
-{}
+        AST(),
+        val(n) { }
 
 int NumNode::evaluate() {
-   return val;
+    return val;
+}
+
+StoreNode::StoreNode(AST *sub) : UnaryNode(sub) { }
+
+int StoreNode::evalute() {
+    int result = getSubTree()->evaluate();
+    calc->store(result);
+    return result;
+}
+
+DivideNode::DivideNode(AST *left, AST *right) :
+        BinaryNode(left, right) { }
+
+int DivideNode::evaluate() {
+    return getLeftSubTree()->evaluate() / getRightSubTree()->evaluate();
+}
+
+TimesNode::TimesNode(AST *left, AST *right) :
+        BinaryNode(left, right) { }
+
+int TimesNode::evaluate() {
+    return getLeftSubTree()->evaluate() * getRightSubTree()->evaluate();
 }

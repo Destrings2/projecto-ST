@@ -1,27 +1,30 @@
-#ifndef parser_h
-#define parser_h
+#pragma once
 
 #include "ast.h"
 #include "scanner.h"
 
 class Parser {
- public:
-   Parser(istream* in);
-   ~Parser();
+public:
+    Parser(istream *in);
 
-   AST* parse();
+    ~Parser();
 
- private:
-   AST* Prog();
-   AST* Expr();
-   AST* RestExpr(AST* e);
-   AST* Term();
-   AST* RestTerm(AST* t);
-   AST* Storable();
-   AST* Factor();
+    AST *parse();
 
-   Scanner* scan;
+private:
+    AST *Prog();
+
+    AST *Expr();
+
+    AST *RestExpr(AST *e);
+
+    AST *Term();
+
+    AST *RestTerm(AST *t);
+
+    AST *Storable();
+
+    AST *Factor();
+
+    Scanner *scan;
 };
-
-
-#endif   

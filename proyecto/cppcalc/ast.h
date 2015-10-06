@@ -1,65 +1,83 @@
-#ifndef ast_h
-#define ast_h
-
-using namespace std;
+#pragma once
 
 class AST {
- public:
-   AST();
-   virtual ~AST() = 0;
-   virtual int evaluate() = 0;
+public:
+    AST();
+
+    virtual ~AST() = 0;
+
+    virtual int evaluate() = 0;
 };
 
 class BinaryNode : public AST {
- public:
-   BinaryNode(AST* left, AST* right);
-   ~BinaryNode();
+public:
+    BinaryNode(AST *left, AST *right);
 
-   AST* getLeftSubTree() const;
-   AST* getRightSubTree() const;
+    ~BinaryNode();
 
- private:
-   AST* leftTree;
-   AST* rightTree;
+    AST *getLeftSubTree() const;
+
+    AST *getRightSubTree() const;
+
+private:
+    AST *leftTree;
+    AST *rightTree;
 };
 
 class UnaryNode : public AST {
- public:
-   UnaryNode(AST* sub);
-   ~UnaryNode();
+public:
+    UnaryNode(AST *sub);
 
-   AST* getSubTree() const;
+    ~UnaryNode();
 
- private:
-   AST* subTree;
+    AST *getSubTree() const;
+
+private:
+    AST *subTree;
 };
 
 class AddNode : public BinaryNode {
- public:
-   AddNode(AST* left, AST* right);
-   
-   int evaluate();
+public:
+    AddNode(AST *left, AST *right);
+
+    int evaluate();
 };
 
 class SubNode : public BinaryNode {
- public:
-   SubNode(AST* left, AST* right);
+public:
+    SubNode(AST *left, AST *right);
 
-   int evaluate();
+    int evaluate();
+};
+
+class TimesNode : public BinaryNode {
+public:
+    TimesNode(AST *left, AST *right);
+
+    int evaluate();
+};
+
+class DivideNode : public BinaryNode {
+public:
+    DivideNode(AST *left, AST *right);
+
+    int evaluate();
+};
+
+class StoreNode : public UnaryNode {
+public:
+    StoreNode(AST* sub);
+
+    int evalute();
 };
 
 class NumNode : public AST {
- public:
-   NumNode(int n);
+public:
+    NumNode(int n);
 
-   int evaluate();
+    int evaluate();
 
- private:
-   int val;
+private:
+    int val;
 };
-
-
-
-
-#endif
 

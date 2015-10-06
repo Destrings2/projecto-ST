@@ -5,19 +5,21 @@
 
 class Scanner {
 public:
-  Scanner(istream* in);
-  ~Scanner();
+    Scanner(istream *in);
 
-  Token* getToken();
-  void putBackToken();
- 
+    ~Scanner();
+
+    Token *getToken();
+
+    void putBackToken();
+
 private:
-  Scanner();
+    Scanner();
 
-  istream* inStream;
-  int lineCount;
-  int colCount;
+    istream *inStream;
+    int lineCount;
+    int colCount;
 
-  bool needToken;
-  Token* lastToken;
+    bool needToken;
+    Token *lastToken;
 };

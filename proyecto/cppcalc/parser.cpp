@@ -3,83 +3,105 @@
 #include <string>
 #include <sstream>
 
-Parser::Parser(istream* in) {
-   scan = new Scanner(in);
+Parser::Parser(istream *in) {
+    scan = new Scanner(in);
 }
 
 Parser::~Parser() {
-   try {
-      delete scan;
-   } catch (...) {}
+    try {
+        delete scan;
+    } catch (...) { }
 }
 
-AST* Parser::parse() {
-   return Prog();
+AST *Parser::parse() {
+    return Prog();
 }
 
-AST* Parser::Prog() {
-   AST* result = Expr();
-   Token* t = scan->getToken();
+AST *Parser::Prog() {
+    AST *result = Expr();
+    Token *t = scan->getToken();
 
-   if (t->getType() != eof) {
-      cout << "Syntax Error: Expected EOF, found token at column " << t->getCol() << endl;
-      throw ParseError;
-   }
+    if (t->getType() != eof) {
+        cout << "Syntax Error: Expected EOF, found token at column " << t->getCol() << endl;
+        throw ParseError;
+    }
 
-   return result;
+    return result;
 }
 
-AST* Parser::Expr() {
-   return RestExpr(Term());
+AST *Parser::Expr() {
+    return RestExpr(Term());
 }
 
-AST* Parser::RestExpr(AST* e) {
-   Token* t = scan->getToken();
+AST *Parser::RestExpr(AST *e) {
+    Token *t = scan->getToken();
 
-   if (t->getType() == add) {
-      return RestExpr(new AddNode(e,Term()));
-   }
+    if (t->getType() == add) {
+        return RestExpr(new AddNode(e, Term()));
+    }
 
-   if (t->getType() == sub)
-      return RestExpr(new SubNode(e,Term()));
+    if (t->getType() == sub)
+        return RestExpr(new SubNode(e, Term()));
 
-   scan->putBackToken();
+    scan->putBackToken();
 
-   return e;
+    return e;
 }
 
-AST* Parser::Term() {
-   //write your Term() code here. This code is just temporary
-   //so you can try the calculator out before finishing it.
-   Token* t = scan->getToken();
+AST *Parser::Term() {
+    //write your Term() code here. This code is just temporary
+    //so you can try the calculator out before finishing it.
+    /*Token *t = scan->getToken();
 
-   if (t->getType() == number) {
-      istringstream in(t->getLex());
-      int val;
-      in >> val;
-      return new NumNode(val);
-   }
+    if (t->getType() == number) {
+        istringstream in(t->getLex());
+        int val;
+        in >> val;
+        return new NumNode(val);
+    }
 
-   cout << "Term not implemented" << endl;
+    cout << "Term not implemented" << endl;
 
-   throw ParseError; 
+    throw ParseError;*/
+    return RestTerm(Storable());
 }
 
-AST* Parser::RestTerm(AST* e) {
-   cout << "RestTerm not implemented" << endl;
+AST *Parser::RestTerm(AST *e){
+    Token *t = scan->getToken();
 
-   throw ParseError; 
+    if (t->getType() == times) {
+        return RestExpr(new TimesNode(e, Term()));
+    }
+
+    if (t->getType() == divide)
+        return RestExpr(new DivideNode(e, Term()));
+
+    scan->putBackToken();
+
+    return e;
 }
 
-AST* Parser::Storable() {
-   cout << "Storable not implemented" << endl;
 
-   throw ParseError; 
+AST *Parser::Storable() {
+    AST *result = Factor();
+    Token *t = scan->getToken();
+    if(t->getType() == keyword) {
+        if (t->getLex() == "S") {
+            return new StoreNode(result);
+        }else{
+            cout << "Syntax error: expected S found:"
+                << t->getLex()
+                << " at line: " << t->getLine()
+                << " at col: " << t->getCol()
+                << endl;
+            throw ParseError;
+        }
+    }
 }
 
-AST* Parser::Factor() {
-   cout << "Factor not implemented" << endl;
+AST *Parser::Factor() {
+    cout << "Factor not implemented" << endl;
 
-   throw ParseError; 
+    throw ParseError;
 }
    

@@ -2,23 +2,25 @@
 #define calculator_h
 
 #include <string>
- 
+
 using namespace std;
 
 
 class Calculator {
- public:
-   Calculator();
+public:
+    Calculator();
 
-   int eval(string expr);
-   void store(int val);
-   int recall();
+    int eval(string expr);
 
- private:
-   int memory;
+    void store(int val);
+
+    int recall();
+
+private:
+    int memory;
 };
 
-extern Calculator* calc;
+extern Calculator *calc;
 
 #endif
 
