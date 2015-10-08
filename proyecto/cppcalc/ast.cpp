@@ -78,7 +78,7 @@ int NumNode::evaluate() {
 
 StoreNode::StoreNode(AST *sub) : UnaryNode(sub) { }
 
-int StoreNode::evalute() {
+int StoreNode::evaluate() {
     int result = getSubTree()->evaluate();
     calc->store(result);
     return result;
@@ -96,4 +96,10 @@ TimesNode::TimesNode(AST *left, AST *right) :
 
 int TimesNode::evaluate() {
     return getLeftSubTree()->evaluate() * getRightSubTree()->evaluate();
+}
+
+RecallNode::RecallNode() { }
+
+int RecallNode::evaluate() {
+    return calc->recall();
 }

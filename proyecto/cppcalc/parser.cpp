@@ -87,7 +87,7 @@ AST *Parser::Storable() {
     Token *t = scan->getToken();
     if(t->getType() == keyword) {
         if (t->getLex() == "S") {
-            return new StoreNode(result);
+             return new StoreNode(result);
         }else{
             cout << "Syntax error: expected S found:"
                 << t->getLex()
@@ -97,11 +97,48 @@ AST *Parser::Storable() {
             throw ParseError;
         }
     }
+    scan->putBackToken();
+    return result;
 }
 
 AST *Parser::Factor() {
-    cout << "Factor not implemented" << endl;
+    Token *t = scan->getToken();
 
-    throw ParseError;
+    if (t->getType() == number) {
+        istringstream in(t->getLex());
+        int val;
+        in >> val;
+        return new NumNode(val);
+    }else if(t->getType() == keyword) {
+        if (t->getLex() == "R") {
+            return new RecallNode();
+        }else{
+            cout << "Syntax error: expected S found:"
+            << t->getLex()
+            << " at line: " << t->getLine()
+            << " at col: " << t->getCol()
+            << endl;
+            throw ParseError;
+        }
+    }
+    else if(t->getType() == lparen)
+    {
+        AST *result = Expr();
+        t = scan->getToken();
+        if(t->getType() == rparen)
+            return result;
+        else
+            cout << "Syntax error: expected ) found:"
+            << t->getLex()
+            << " at line: " << t->getLine()
+            << " at col: " << t->getCol()
+            << endl;
+    }
+
+    cout << "Syntax error: expected number, R, ) found:"
+    << t->getLex()
+    << " at line: " << t->getLine()
+    << " at col: " << t->getCol()
+    << endl;
 }
    
