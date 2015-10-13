@@ -80,7 +80,7 @@ Token *Scanner::getToken() {
                     lineCount++;
                 }
                 else if (isWhiteSpace(c));
-                else if (inStream->eof()) {
+                else if (inStream->eof() or c == -1) {
                     foundOne = true;
                     type = eof;
                 }
