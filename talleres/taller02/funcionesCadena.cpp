@@ -9,10 +9,17 @@ char *saltarblancosinicio(char *s){
 }
 
 const char *indiceAlaDerecha(const char *s, int c){
+    const char *last = nullptr;
     while(*s != 0)
+    {
         if(*s == c)
-            return s;
-        else
-            ++s;
-    return '\0';
+            last = s;
+        ++s;
+    }
+    return last != nullptr ? last : '\0';
+}
+
+int main(){
+    char s[] = "Test hola";
+    std::cout << indiceAlaDerecha(s, 'x');
 }
