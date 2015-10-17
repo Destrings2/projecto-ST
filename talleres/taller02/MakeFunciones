@@ -1,0 +1,17 @@
+all: suma
+
+OBJECTS = funciones.o main.o
+CPPFLAGS = -std=c++11
+
+suma: $(OBJECTS)
+	g++ $(CPPFLAGS) -o $@ $(OBJECTS)
+
+funciones.o: funciones.cpp
+	g++ $(CPPFLAGS) -c $<
+
+main.o: main.cpp
+	g++ $(CPPFLAGS) -c $<
+
+clean:
+	rm -f *.o
+	rm -f suma

@@ -11,19 +11,19 @@ class Armada
 public:
     vector<Barco> &obtenerBarcos();
 
-    virtual void registrarBarco(Barco barco) = 0;
+    virtual void registrarBarco(Barco &barco) = 0;
 };
 
 class ArmadaMarina : public Armada
 {
 
 public:
-    void registrarBarco(Barco barco);
+    void registrarBarco(Barco &barco);
 };
 
 class ArmadaFluvial : public Armada
 {
 
 public:
-    void registrarBarco(Barco barco);
+    void registrarBarco(Barco &barco);
 };

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Barcos.h"
 #include "Marina.h"
 
@@ -14,8 +15,7 @@ int main()
     ArmadaFluvial *armadaFluvial = new ArmadaFluvial();
     ArmadaMarina *armadaMarina = new ArmadaMarina();
 
-    armadaFluvial->registrarBarco(*a);
-    armadaMarina->registrarBarco(*b);
+    armadaMarina->registrarBarco(*a);
 
     return 0;
 }

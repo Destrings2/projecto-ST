@@ -20,8 +20,8 @@ public:
 
 class StrategyClient
 {
-    Strategy *strategy;
+    Strategy &strategy;
 public:
-    void setStrategy(Strategy *s);
+    void setStrategy(Strategy &s);
     void performOperation();
 };

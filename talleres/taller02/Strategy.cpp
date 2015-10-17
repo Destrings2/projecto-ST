@@ -10,10 +10,10 @@ void ConcreteStrategyB::operation(){
     std::cout << "Hello Strategy B" << std::endl;
 }
 
-void StrategyClient::setStrategy(Strategy *s){
+void StrategyClient::setStrategy(Strategy &s){
     strategy = s;
 }
 
 void StrategyClient::performOperation(){
-    strategy->operation();
+    strategy.operation();
 }
