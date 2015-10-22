@@ -16,6 +16,16 @@ public:
 
     int recall();
 
+    int clear();
+
+    int plus(int n);
+
+    void savevar(string name, int val);
+
+    int recallvar(string name);
+
+    int minus(int n);
+
 private:
     int memory;
 };

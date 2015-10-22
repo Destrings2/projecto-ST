@@ -109,3 +109,11 @@ public:
     int evaluate();
 
 };
+
+class ClearNode : public AST {
+public:
+    ClearNode();
+
+    int evaluate();
+
+};

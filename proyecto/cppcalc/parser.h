@@ -27,4 +27,6 @@ private:
     AST *Factor();
 
     Scanner *scan;
+
+    AST *Assign(AST *e);
 };

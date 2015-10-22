@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <stdio.h>
 #include "calcex.h"
 #include "calculator.h"
 
@@ -12,11 +13,9 @@ int main(int argc, char *argv[]) {
     string line;
 
     try {
-
         cout << ">";
-        while(getline(cin, line))
-        {
-            calc = new Calculator();
+        calc = new Calculator();
+        while(getline(cin, line)){
             int result = calc->eval(line);
             cout << "=>" << result << endl;
             cout << ">";
@@ -28,4 +27,4 @@ int main(int argc, char *argv[]) {
         cout << "Program Aborted due to exception!" << endl;
     }
 }
-   
+

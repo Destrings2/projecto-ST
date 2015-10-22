@@ -66,6 +66,10 @@ AST *Parser::Term() {
     return RestTerm(Storable());
 }
 
+AST *Parser::Assign(AST *e) {
+    Token *t = scan->getToken();
+}
+
 AST *Parser::RestTerm(AST *e){
     Token *t = scan->getToken();
 
@@ -117,9 +121,11 @@ AST *Parser::Factor() {
         in >> val;
         return new NumNode(val);
     }else if(t->getType() == keyword) {
-        if (t->getLex() == "R") {
+        if (t->getLex() == "R")
             return new RecallNode();
-        }else{
+        if (t->getLex() == "C")
+            return new ClearNode();
+        else{
             cout << "Syntax error: expected S found:"
             << t->getLex()
             << " at line: " << t->getLine()
@@ -141,8 +147,12 @@ AST *Parser::Factor() {
             << " at col: " << t->getCol()
             << endl;
     }
+    else if(t->getType() == identifier)
+    {
 
-    cout << "Syntax error: expected number, R, ) found:"
+    }
+
+    cout << "Syntax error: expected number, R, C, ) found:"
     << t->getLex()
     << " at line: " << t->getLine()
     << " at col: " << t->getCol()

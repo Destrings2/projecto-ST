@@ -109,19 +109,26 @@ ModNode::ModNode(AST *left, AST *right) : BinaryNode(left, right){ }
 MemPlusNode::MemPlusNode(AST *sub) : UnaryNode(sub) {}
 
 int MemPlusNode::evaluate() {
-    int result = calc->recall() + getSubTree()->evaluate();
-    calc->store(calc->recall() + result);
+    int result = getSubTree()->evaluate();
+    result = calc->plus(result);
     return result;
 }
 
 MemMinusNode::MemMinusNode(AST *sub) : UnaryNode(sub) {}
 
 int MemMinusNode::evaluate() {
-    int result = calc->recall() - getSubTree()->evaluate();
-    calc->store(result);
+    int result = getSubTree()->evaluate();
+    result = calc->minus(result);
     return result;
 }
 
 int ModNode::evaluate() {
     return  getLeftSubTree()->evaluate() % getRightSubTree()->evaluate();
+}
+
+ClearNode::ClearNode() {}
+
+int ClearNode::evaluate() {
+    calc->clear();
+    return 0;
 }
