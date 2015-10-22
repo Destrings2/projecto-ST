@@ -71,6 +71,20 @@ public:
     int evaluate();
 };
 
+class MemMinusNode : public UnaryNode {
+public:
+    MemMinusNode(AST* sub);
+
+    int evaluate();
+};
+
+class MemPlusNode : public UnaryNode {
+public:
+    MemPlusNode(AST* sub);
+
+    int evaluate();
+};
+
 class ModNode : public BinaryNode {
 public:
     ModNode(AST *left, AST *right);

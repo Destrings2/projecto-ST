@@ -106,6 +106,22 @@ int RecallNode::evaluate() {
 
 ModNode::ModNode(AST *left, AST *right) : BinaryNode(left, right){ }
 
+MemPlusNode::MemPlusNode(AST *sub) : UnaryNode(sub) {}
+
+int MemPlusNode::evaluate() {
+    int result = calc->recall() + getSubTree()->evaluate();
+    calc->store(calc->recall() + result);
+    return result;
+}
+
+MemMinusNode::MemMinusNode(AST *sub) : UnaryNode(sub) {}
+
+int MemMinusNode::evaluate() {
+    int result = calc->recall() - getSubTree()->evaluate();
+    calc->store(result);
+    return result;
+}
+
 int ModNode::evaluate() {
     return  getLeftSubTree()->evaluate() % getRightSubTree()->evaluate();
 }

@@ -91,8 +91,12 @@ AST *Parser::Storable() {
     if(t->getType() == keyword) {
         if (t->getLex() == "S") {
              return new StoreNode(result);
+        }else if(t->getLex() == "P") {
+            return new MemPlusNode(result);
+        }else if(t->getLex() == "M") {
+            return new MemMinusNode(result);
         }else{
-            cout << "Syntax error: expected S found:"
+            cout << "Syntax error: expected S, P, M found:"
                 << t->getLex()
                 << " at line: " << t->getLine()
                 << " at col: " << t->getCol()
