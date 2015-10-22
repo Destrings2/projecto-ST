@@ -103,3 +103,9 @@ RecallNode::RecallNode() { }
 int RecallNode::evaluate() {
     return calc->recall();
 }
+
+ModNode::ModNode(AST *left, AST *right) : BinaryNode(left, right){ }
+
+int ModNode::evaluate() {
+    return  getLeftSubTree()->evaluate() % getRightSubTree()->evaluate();
+}

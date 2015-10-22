@@ -76,6 +76,9 @@ AST *Parser::RestTerm(AST *e){
     if (t->getType() == divide)
         return RestExpr(new DivideNode(e, Term()));
 
+    if (t->getType() == modulo)
+        return RestExpr(new ModNode(e, Term()));
+
     scan->putBackToken();
 
     return e;

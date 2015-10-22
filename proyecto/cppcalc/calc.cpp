@@ -13,17 +13,14 @@ int main(int argc, char *argv[]) {
 
     try {
 
-        cout << "Please enter a calculator expression: ";
-
-        getline(cin, line);
-        // line + '\n';
-
-        calc = new Calculator();
-
-        int result = calc->eval(line);
-
-        cout << "The result is " << result << endl;
-
+        cout << ">";
+        while(getline(cin, line))
+        {
+            calc = new Calculator();
+            int result = calc->eval(line);
+            cout << "=>" << result << endl;
+            cout << ">";
+        }
         delete calc;
 
     }

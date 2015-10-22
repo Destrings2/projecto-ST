@@ -75,6 +75,8 @@ Token *Scanner::getToken() {
                 else if (c == '/') state = 6;
                 else if (c == '(') state = 7;
                 else if (c == ')') state = 8;
+                else if (c == '=') state = 9;
+                else if (c == '%') state = 10;
                 else if (c == '\n') {
                     colCount = -1;
                     lineCount++;
@@ -133,6 +135,14 @@ Token *Scanner::getToken() {
                 break;
             case 8 :
                 type = rparen;
+                foundOne = true;
+                break;
+            case 9 :
+                type = assign;
+                foundOne = true;
+                break;
+            case 10 :
+                type = modulo;
                 foundOne = true;
                 break;
         }
