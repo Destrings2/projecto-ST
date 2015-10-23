@@ -2,6 +2,7 @@
 #define calculator_h
 
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ public:
 
     int plus(int n);
 
-    void savevar(string name, int val);
+    void storevar(string name, int val);
 
     int recallvar(string name);
 
@@ -28,6 +29,7 @@ public:
 
 private:
     int memory;
+    map<string, int> variableMemory;
 };
 
 extern Calculator *calc;

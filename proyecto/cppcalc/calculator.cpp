@@ -1,13 +1,10 @@
 #include "calculator.h"
 #include "parser.h"
-#include "ast.h"
-#include <string>
-#include <iostream>
 #include <sstream>
 
 
 Calculator::Calculator() :
-        memory(0) { }
+        memory(0), variableMemory() { }
 
 int Calculator::eval(string expr) {
 
@@ -40,4 +37,15 @@ int Calculator::minus(int n) {
 
 int Calculator::clear() {
     memory = 0;
+}
+
+void Calculator::storevar(string name, int val){
+    variableMemory[name] = val;
+}
+
+int Calculator::recallvar(string name){
+    if(variableMemory[name])
+        return variableMemory[name];
+    else
+        return 0;
 }

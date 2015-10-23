@@ -2,39 +2,6 @@
 #include <iostream>
 #include "calculator.h"
 
-// for debug information uncomment
-//#define debug
-
-AST::AST() { }
-
-AST::~AST() { }
-
-BinaryNode::BinaryNode(AST *left, AST *right) :
-        AST(),
-        leftTree(left),
-        rightTree(right) { }
-
-BinaryNode::~BinaryNode() {
-#ifdef debug
-    cout << "In BinaryNode destructor" << endl;
-#endif
-
-    try {
-        delete leftTree;
-    } catch (...) { }
-
-    try {
-        delete rightTree;
-    } catch (...) { }
-}
-
-AST *BinaryNode::getLeftSubTree() const {
-    return leftTree;
-}
-
-AST *BinaryNode::getRightSubTree() const {
-    return rightTree;
-}
 
 UnaryNode::UnaryNode(AST *sub) :
         AST(),
@@ -131,4 +98,19 @@ ClearNode::ClearNode() {}
 int ClearNode::evaluate() {
     calc->clear();
     return 0;
+}
+
+AssignNode::AssignNode(AST_<std::string> *left, AST *right) : BinaryNode_<string, int>(left, right){ }
+
+int AssignNode::evaluate(){
+    int result = getRightSubTree()->evaluate();
+    std::string name = getLeftSubTree()->evaluate();
+    calc->storevar(name, result);
+    return result;
+}
+
+IdentifierNode::IdentifierNode(std::string str) : AST_<std::string>(), val(str){ }
+
+std::string IdentifierNode::evaluate(){
+    return val;
 }

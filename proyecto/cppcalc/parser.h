@@ -28,5 +28,5 @@ private:
 
     Scanner *scan;
 
-    AST *Assign(AST *e);
+    AST *Assign(AST_<string>* e);
 };

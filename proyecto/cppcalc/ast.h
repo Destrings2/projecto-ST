@@ -1,28 +1,5 @@
 #pragma once
-
-class AST {
-public:
-    AST();
-
-    virtual ~AST() = 0;
-
-    virtual int evaluate() = 0;
-};
-
-class BinaryNode : public AST {
-public:
-    BinaryNode(AST *left, AST *right);
-
-    ~BinaryNode();
-
-    AST *getLeftSubTree() const;
-
-    AST *getRightSubTree() const;
-
-private:
-    AST *leftTree;
-    AST *rightTree;
-};
+#include "templateAST.h"
 
 class UnaryNode : public AST {
 public:
@@ -42,6 +19,14 @@ public:
 
     int evaluate();
 };
+
+class AssignNode : public BinaryNode_<std::string, int> {
+public:
+    AssignNode(AST_<std::string> *left, AST *right);
+
+    int evaluate();
+};
+
 
 class SubNode : public BinaryNode {
 public:
@@ -100,6 +85,16 @@ public:
 
 private:
     int val;
+};
+
+class IdentifierNode : public AST_<std::string> {
+public:
+    IdentifierNode(std::string str);
+
+    std::string evaluate();
+
+private:
+    std::string val;
 };
 
 class RecallNode : public AST {

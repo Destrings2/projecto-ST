@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "calcex.h"
+#include "calculator.h"
 #include <string>
 #include <sstream>
 
@@ -49,25 +50,7 @@ AST *Parser::RestExpr(AST *e) {
 }
 
 AST *Parser::Term() {
-    //write your Term() code here. This code is just temporary
-    //so you can try the calculator out before finishing it.
-    /*Token *t = scan->getToken();
-
-    if (t->getType() == number) {
-        istringstream in(t->getLex());
-        int val;
-        in >> val;
-        return new NumNode(val);
-    }
-
-    cout << "Term not implemented" << endl;
-
-    throw ParseError;*/
     return RestTerm(Storable());
-}
-
-AST *Parser::Assign(AST *e) {
-    Token *t = scan->getToken();
 }
 
 AST *Parser::RestTerm(AST *e){
@@ -87,7 +70,6 @@ AST *Parser::RestTerm(AST *e){
 
     return e;
 }
-
 
 AST *Parser::Storable() {
     AST *result = Factor();
@@ -114,19 +96,20 @@ AST *Parser::Storable() {
 
 AST *Parser::Factor() {
     Token *t = scan->getToken();
-
-    if (t->getType() == number) {
+    if (t->getType() == number){
         istringstream in(t->getLex());
         int val;
         in >> val;
         return new NumNode(val);
-    }else if(t->getType() == keyword) {
+    }else if(t->getType() == identifier)
+        return Assign(new IdentifierNode(t->getLex()));
+    else if(t->getType() == keyword) {
         if (t->getLex() == "R")
             return new RecallNode();
         if (t->getLex() == "C")
             return new ClearNode();
         else{
-            cout << "Syntax error: expected S found:"
+            cout << "Syntax error: expected R, C found:"
             << t->getLex()
             << " at line: " << t->getLine()
             << " at col: " << t->getCol()
@@ -147,15 +130,24 @@ AST *Parser::Factor() {
             << " at col: " << t->getCol()
             << endl;
     }
-    else if(t->getType() == identifier)
-    {
 
-    }
-
-    cout << "Syntax error: expected number, R, C, ) found:"
+    cout << "Syntax error: expected number, identifier, R, C, ( found:"
     << t->getLex()
     << " at line: " << t->getLine()
     << " at col: " << t->getCol()
     << endl;
 }
-   
+
+AST* Parser::Assign(AST_<string>* e)
+{
+    Token *t = scan->getToken();
+    if(t->getType() == assign)
+    {
+        AST* result = Expr();
+        return new AssignNode(e, result);
+    }
+
+    int recall = calc->recallvar(e->evaluate());
+    scan->putBackToken();
+    return new NumNode(recall);
+}
