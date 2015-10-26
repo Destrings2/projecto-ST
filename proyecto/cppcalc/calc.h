@@ -31,7 +31,8 @@ inline bool isEnvPref(int argc, const char **argv)
 {
     for(int i = 0; i < argc; ++i)
     {
-        if(argv[i] == "-e")
+        string str = argv[i];
+        if(str == "-e")
             return true;
     }
     return false;

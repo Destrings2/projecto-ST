@@ -4,7 +4,7 @@
 
 
 Calculator::Calculator() :
-        memory(0), variableMemory() { }
+        memory(0), variableMemory(), files() { }
 
 int Calculator::eval(string expr) {
 
@@ -31,7 +31,7 @@ int Calculator::plus(int n) {
 }
 
 int Calculator::minus(int n) {
-    memory += n;
+    memory -= n;
     return memory;
 }
 
@@ -50,18 +50,35 @@ int Calculator::recallvar(string name){
         return 0;
 }
 
-void Calculator::setInterativeMode(bool set){
-    interactiveMode = set;
-}
 
 void Calculator::setPrefEnv(bool set){
     preferEnv = set;
 }
 
-bool Calculator::getInteractiveMode(){
-    return interactiveMode;
-}
-
 bool Calculator::getPreferEnv(){
     return preferEnv;
+}
+
+void Calculator::setAssignPerformed(bool assignPerformed){
+    Calculator::assignPerformed = assignPerformed;
+}
+
+bool Calculator::isAssignPerformed(){
+    return assignPerformed;
+}
+
+void Calculator::addFile(string filename)
+{
+    files.push_back(filename);
+}
+
+deque<string> Calculator::getQueue() const
+{
+    return files;
+}
+
+
+int Calculator::getFileNumber()
+{
+    return files.size();
 }

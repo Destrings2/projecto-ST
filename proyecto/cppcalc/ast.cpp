@@ -106,6 +106,8 @@ int AssignNode::evaluate(){
     int result = getRightSubTree()->evaluate();
     std::string name = getLeftSubTree()->evaluate();
     calc->storevar(name, result);
+    calc->setAssignPerformed(true);
+    cout << "=> " <<  name << " <- ";
     return result;
 }
 
