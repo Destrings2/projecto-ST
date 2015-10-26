@@ -27,9 +27,22 @@ public:
 
     int minus(int n);
 
+    void setInterativeMode(bool set);
+
+    void setPrefEnv(bool set);
+
+    bool getInteractiveMode();
+
+    bool getPreferEnv();
+
 private:
     int memory;
+
     map<string, int> variableMemory;
+
+    bool interactiveMode;
+
+    bool preferEnv;
 };
 
 extern Calculator *calc;

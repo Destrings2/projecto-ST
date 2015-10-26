@@ -87,8 +87,6 @@ Token *Scanner::getToken() {
                     type = eof;
                 }
                 else {
-                    cout << "Unrecognized Token found at line " << line <<
-                    " and column " << column << endl;
                     throw UnrecognizedToken;
                 }
                 break;

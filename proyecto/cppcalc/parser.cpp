@@ -23,7 +23,6 @@ AST *Parser::Prog() {
     Token *t = scan->getToken();
 
     if (t->getType() != eof) {
-        cout << "Syntax Error: Expected EOF, found token at column " << t->getCol() << endl;
         throw ParseError;
     }
 
@@ -38,7 +37,8 @@ AST *Parser::RestExpr(AST *e) {
     Token *t = scan->getToken();
 
     if (t->getType() == add) {
-        return RestExpr(new AddNode(e, Term()));
+        AST *result = Term();
+        return RestExpr(new AddNode(e, result));
     }
 
     if (t->getType() == sub)
@@ -82,11 +82,6 @@ AST *Parser::Storable() {
         }else if(t->getLex() == "M") {
             return new MemMinusNode(result);
         }else{
-            cout << "Syntax error: expected S, P, M found:"
-                << t->getLex()
-                << " at line: " << t->getLine()
-                << " at col: " << t->getCol()
-                << endl;
             throw ParseError;
         }
     }
@@ -109,11 +104,6 @@ AST *Parser::Factor() {
         if (t->getLex() == "C")
             return new ClearNode();
         else{
-            cout << "Syntax error: expected R, C found:"
-            << t->getLex()
-            << " at line: " << t->getLine()
-            << " at col: " << t->getCol()
-            << endl;
             throw ParseError;
         }
     }
@@ -123,19 +113,8 @@ AST *Parser::Factor() {
         t = scan->getToken();
         if(t->getType() == rparen)
             return result;
-        else
-            cout << "Syntax error: expected ) found:"
-            << t->getLex()
-            << " at line: " << t->getLine()
-            << " at col: " << t->getCol()
-            << endl;
     }
-
-    cout << "Syntax error: expected number, identifier, R, C, ( found:"
-    << t->getLex()
-    << " at line: " << t->getLine()
-    << " at col: " << t->getCol()
-    << endl;
+    throw ParseError;
 }
 
 AST* Parser::Assign(AST_<string>* e)

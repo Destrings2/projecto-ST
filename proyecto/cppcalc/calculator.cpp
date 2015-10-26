@@ -49,3 +49,19 @@ int Calculator::recallvar(string name){
     else
         return 0;
 }
+
+void Calculator::setInterativeMode(bool set){
+    interactiveMode = set;
+}
+
+void Calculator::setPrefEnv(bool set){
+    preferEnv = set;
+}
+
+bool Calculator::getInteractiveMode(){
+    return interactiveMode;
+}
+
+bool Calculator::getPreferEnv(){
+    return preferEnv;
+}

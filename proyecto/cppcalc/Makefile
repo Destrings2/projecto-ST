@@ -1,7 +1,7 @@
 all: calc
 
 OBJECTS=calc.o scanner.o token.o ast.o parser.o calculator.o
-CPPFLAGS=-g
+CPPFLAGS=-g -std=c++11
 
 calc: $(OBJECTS)
 	g++ $(CPPFLAGS) -o $@ $(OBJECTS)
