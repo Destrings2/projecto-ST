@@ -15,7 +15,7 @@ class Parser
   private
   def prog
     result = expr
-    t = @scan.getToken
+    t = @scan.get_token
     
     if t.type != :eof
       print "Expected EOF. Found ", t.type, ".\n"
@@ -40,7 +40,7 @@ class Parser
       return rest_expr(AddNode.new(e,term))
     end
       
-    @scan.putBackToken
+    @scan.put_back_token
     
     e
   end
@@ -53,12 +53,12 @@ class Parser
     
     if t.type == :number
       val = t.lex.to_i
-      return numnode.new(val)
+      return NumNode.new(val)
     end
     
     puts "Term not implemented\n"
     
-    raise parseerror.new
+    raise ParseError.new
   end
    
   def rest_term(e)

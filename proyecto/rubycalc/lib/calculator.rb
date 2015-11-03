@@ -2,8 +2,7 @@ require 'parser'
 require 'ast'
 
 class Calculator
-  attr_reader :memory
-  attr_writer :memory
+  attr_accessor :memory
   
   def initialize
     @memory = 0

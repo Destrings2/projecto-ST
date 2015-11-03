@@ -38,7 +38,7 @@ class Scanner
         column = @col_count
         line = @line_count
         if is_letter?(c); state=1
-        elsif is_digit?(c) then state=2
+        elsif is_digit?(c) then state = 2
         elsif c == ?+ then state = 3
         elsif c == ?- then state = 4
         elsif c == ?* then state = 5

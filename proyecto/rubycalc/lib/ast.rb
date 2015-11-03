@@ -27,6 +27,46 @@ class AddNode < BinaryNode
   end
 end
 
+class TimesNode < BinaryNode
+  def initialize(left, right)
+    super(left, right)
+  end
+
+  def evaluate
+    @left.evaluate * @right.evaluate
+  end
+end
+
+class DivideNode < BinaryNode
+  def initialize(left, right)
+    super(left, right)
+  end
+
+  def evaluate
+    @left.evaluate / @right.evaluate
+  end
+end
+
+class StoreNode < UnaryNode
+  def initialize(subtree)
+    super(subtree)
+  end
+
+  def evaluate
+    $calc.memory = @subtree.evaluate
+  end
+end
+
+class RecallNode < UnaryNode
+  def initialize(subtree)
+    super(subtree)
+  end
+
+  def evaluate
+    $calc.memory
+  end
+end
+
 class SubNode < BinaryNode
   def initialize(left, right)
     super(left, right)
