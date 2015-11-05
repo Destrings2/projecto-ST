@@ -9,7 +9,7 @@ class Calculator
   end
   
   def eval(expr)
-    parser = Parser.new(StringIO.new(expr))
+    parser = Parser.new StringIO.new(expr)
     ast = parser.parse
     ast.evaluate
   end

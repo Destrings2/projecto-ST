@@ -57,11 +57,7 @@ class StoreNode < UnaryNode
   end
 end
 
-class RecallNode < UnaryNode
-  def initialize(subtree)
-    super(subtree)
-  end
-
+class RecallNode
   def evaluate
     $calc.memory
   end

@@ -5,7 +5,7 @@ require 'calcex'
 
 class Parser
   def initialize(istream)
-    @scan = Scanner.new(istream)
+    @scan = Scanner.new istream
   end
    
   def parse()
@@ -50,7 +50,7 @@ class Parser
     # so you can try the calculator out before finishing it.
     
     t = @scan.get_token
-    
+
     if t.type == :number
       val = t.lex.to_i
       return NumNode.new(val)
