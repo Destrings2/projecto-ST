@@ -1,0 +1,17 @@
+task :default => :run1
+
+task :run1 do
+  sh "./processhelloworld < processhelloworld01.in > processhelloworld01_.out"
+  sh "diff processhelloworld01_.out processhelloworld01.out"
+  sh "rm -f processhelloworld01_.out"
+end
+
+task :run2 do
+  sh "./processhelloworld < processhelloworld02.in > processhelloworld02_.out"
+  sh "diff processhelloworld02_.out processhelloworld02.out"
+  sh "rm -f processhelloworld02_.out"
+end
+
+task :clean do
+  sh "rm -f *~ *.*~"
+end

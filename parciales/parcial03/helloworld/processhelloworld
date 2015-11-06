@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'HelloWorld'
+
+times = 0
+until $stdin.eof? do
+  s = gets
+  times += 1 if isHelloWorld s
+end
+puts "times: #{times}"
