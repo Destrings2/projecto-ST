@@ -5,5 +5,6 @@
 # contiene Hello World
 
 def isHelloWorld(a)
-  false
+  lower = a.downcase
+  /^hello world.*/ === lower
 end
