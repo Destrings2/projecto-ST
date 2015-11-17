@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'HelloWorld'
+require './helloworld'
 
 times = 0
 until $stdin.eof? do
