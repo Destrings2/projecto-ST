@@ -69,6 +69,7 @@ void initParamVars(int size, const char **param){
 void interactiveMode(){
     string line;
 
+    cout << ">";
     while(getline(cin, line)){
         try{
             int result = calc->eval(line);
@@ -87,6 +88,7 @@ void interactiveMode(){
         }catch(...){
             cout << "* parse error" <<endl;
         }
+        cout << ">";
     }
 }
 

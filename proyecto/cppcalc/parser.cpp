@@ -35,10 +35,8 @@ AST *Parser::Expr() {
 AST *Parser::RestExpr(AST *e) {
     Token *t = scan->getToken();
 
-    if (t->getType() == add) {
-        AST *result = Term();
-        return RestExpr(new AddNode(e, result));
-    }
+    if (t->getType() == add)
+        return RestExpr(new AddNode(e, Term()));
 
     if (t->getType() == sub)
         return RestExpr(new SubNode(e, Term()));
@@ -56,13 +54,13 @@ AST *Parser::RestTerm(AST *e){
     Token *t = scan->getToken();
 
     if (t->getType() == modulo)
-        return RestExpr(new ModNode(e, Term()));
+        return RestTerm(new ModNode(e, Storable()));
 
     if (t->getType() == times)
-        return RestExpr(new TimesNode(e, Term()));
+        return RestTerm(new TimesNode(e, Storable()));
 
     if (t->getType() == divide)
-        return RestExpr(new DivideNode(e, Term()));
+        return RestTerm(new DivideNode(e, Storable()));
 
     scan->putBackToken();
 
