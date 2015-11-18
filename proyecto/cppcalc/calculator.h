@@ -38,10 +38,11 @@ public:
 
     void addFile(string filename);
 
-
     int getFileNumber();
 
-    deque<string> getQueue() const;
+    deque<string> &getQueue();
+
+    deque<string> &getLog();
 private:
     int memory;
 
@@ -49,7 +50,8 @@ private:
 
     deque<string> files;
 
-    bool interactiveMode;
+    deque<string> assignLog;
+
 
     bool preferEnv;
 

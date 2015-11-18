@@ -1,5 +1,7 @@
 #include "ast.h"
 #include <iostream>
+#include <string>
+#include <sstream>
 #include "calculator.h"
 
 
@@ -71,7 +73,12 @@ int RecallNode::evaluate() {
     return calc->recall();
 }
 
-ModNode::ModNode(AST *left, AST *right) : BinaryNode(left, right){ }
+ModNode::ModNode(AST *left, AST *right) :
+        BinaryNode(left, right){ }
+
+int ModNode::evaluate() {
+    return  getLeftSubTree()->evaluate() % getRightSubTree()->evaluate();
+}
 
 MemPlusNode::MemPlusNode(AST *sub) : UnaryNode(sub) {}
 
@@ -89,9 +96,6 @@ int MemMinusNode::evaluate() {
     return result;
 }
 
-int ModNode::evaluate() {
-    return  getLeftSubTree()->evaluate() % getRightSubTree()->evaluate();
-}
 
 ClearNode::ClearNode() {}
 
@@ -102,12 +106,25 @@ int ClearNode::evaluate() {
 
 AssignNode::AssignNode(AST_<std::string> *left, AST *right) : BinaryNode_<string, int>(left, right){ }
 
+string uglyToString(int n) //Como MinGW no funciona un feo hack.
+{
+    std::stringstream stream ;
+    stream << n ;
+    return stream.str() ;
+}
+
 int AssignNode::evaluate(){
     int result = getRightSubTree()->evaluate();
     std::string name = getLeftSubTree()->evaluate();
     calc->storevar(name, result);
     calc->setAssignPerformed(true);
-    cout << "=> " <<  name << " <- ";
+
+    //Bug en MinGW no permite usar std::to_string(result);
+
+    std::string log = name + " <- " + uglyToString(result);
+
+    calc->getLog().push_back(log);
+
     return result;
 }
 

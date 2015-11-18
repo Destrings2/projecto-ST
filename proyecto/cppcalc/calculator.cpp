@@ -4,7 +4,7 @@
 
 
 Calculator::Calculator() :
-        memory(0), variableMemory(), files() { }
+        memory(0), variableMemory(), files(), assignLog() { }
 
 int Calculator::eval(string expr) {
 
@@ -72,7 +72,7 @@ void Calculator::addFile(string filename)
     files.push_back(filename);
 }
 
-deque<string> Calculator::getQueue() const
+deque<string> &Calculator::getQueue()
 {
     return files;
 }
@@ -81,4 +81,9 @@ deque<string> Calculator::getQueue() const
 int Calculator::getFileNumber()
 {
     return files.size();
+}
+
+deque<string> &Calculator::getLog()
+{
+    return assignLog;
 }

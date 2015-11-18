@@ -69,20 +69,24 @@ void initParamVars(int size, const char **param){
 void interactiveMode(){
     string line;
 
-    cout << "> ";
     while(getline(cin, line)){
         try{
             int result = calc->eval(line);
             if(calc->isAssignPerformed()){
-                cout << result << endl;
+                cout << result << " [";
+                for(std::deque<string>::iterator iterator = calc->getLog().begin(); iterator != calc->getLog().end()-1; ++iterator)
+                {
+                    cout << *iterator << ", ";
+                }
+                cout << calc->getLog().back() << "]" << endl;
                 calc->setAssignPerformed(false);
+                calc->getLog().clear();
             }
             else
                 cout << "=> " << result << endl;
         }catch(...){
             cout << "* parse error" <<endl;
         }
-        cout << "> ";
     }
 }
 

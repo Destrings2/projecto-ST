@@ -1,7 +1,6 @@
 #include "parser.h"
 #include "calcex.h"
 #include "calculator.h"
-#include <string>
 #include <sstream>
 
 Parser::Parser(istream *in) {
@@ -56,15 +55,14 @@ AST *Parser::Term() {
 AST *Parser::RestTerm(AST *e){
     Token *t = scan->getToken();
 
-    if (t->getType() == times) {
+    if (t->getType() == modulo)
+        return RestExpr(new ModNode(e, Term()));
+
+    if (t->getType() == times)
         return RestExpr(new TimesNode(e, Term()));
-    }
 
     if (t->getType() == divide)
         return RestExpr(new DivideNode(e, Term()));
-
-    if (t->getType() == modulo)
-        return RestExpr(new ModNode(e, Term()));
 
     scan->putBackToken();
 
