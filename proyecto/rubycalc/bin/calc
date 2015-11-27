@@ -4,17 +4,114 @@ require 'rubygems'
 require 'calculator'
 require 'calcex'
 
-$stdout.print "> "
-$stdout.flush
-
-text = gets
-
-$calc = Calculator.new
-
-begin
-  puts "= " + $calc.eval(text).to_s
-rescue ParseError
-  puts "Parse Error"
-rescue UnrecognizedTokenException
-  puts "UnrecognizedTokenException"
+def main
+  $calc = Calculator.new
+  $calc.envprefered = envprefered?
+  init_vars
+  if ARGV.length > 0
+    file
+  else
+    interactive
+  end
 end
+
+def interactive
+
+  $stdout.print "> "
+  $stdout.flush
+  while (text = gets)
+
+    begin
+      result = $calc.eval(text).to_s
+      print_code(result)
+    rescue ParseError
+      puts "Parse Error"
+    rescue UnrecognizedTokenException
+      puts "UnrecognizedTokenException"
+    end
+
+    $stdout.print "> "
+    $stdout.flush
+  end
+end
+
+def print_code(result)
+  if $calc.assigned
+    print "=> #{result}  ["
+    $calc.assignlog.each_with_index do |log, i|
+      if i == $calc.assignlog.size - 1
+        print log
+      else
+        print "#{log}, "
+      end
+    end
+    puts "]"
+    $calc.assignlog = Array.new
+    $calc.assigned = false
+  else
+    puts "=> #{result}"
+  end
+end
+
+def file
+  lines = ARGF.readlines
+  lines.each do |text|
+    begin
+      result = $calc.eval(text).to_s
+      print_code(result)
+    rescue ParseError
+      puts "Parse Error"
+    rescue UnrecognizedTokenException
+      puts "UnrecognizedTokenException"
+    rescue
+      puts "Unkown exception"
+    end
+  end
+end
+
+def init_vars
+  if $calc.envprefered
+    init_command
+    init_extern
+  else
+    init_extern
+    init_command
+  end
+end
+
+def init_command
+  for i in 0..ARGV.length
+    case ARGV[i]
+      when "-v"
+        i += 1
+        str = ARGV[i]
+        ARGV.delete_at(i)
+        var = str.split(/=/)
+        $calc.storevar!(var[0], var[1].to_i)
+    end
+  end
+  ARGV.delete("-v")
+end
+
+def init_extern
+  ENV.each do |k, v|
+    k.match(/^CALCVAR(.+)/){ |match|
+      if v.match(/^\d+$/)
+        $calc.storevar!(match[1], v.to_i)
+      end
+    }
+  end
+end
+
+def envprefered?
+  ARGV.each do |arg|
+    case arg
+      when "-e"
+        ARGV.delete("-e")
+        return true
+    end
+  end
+  false
+end
+
+main

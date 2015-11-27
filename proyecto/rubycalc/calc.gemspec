@@ -1,7 +1,7 @@
 
 Gem::Specification.new do |s|
   s.name    = 'calc'
-  s.version = '0.0.1'
+  s.version = '1.0.0'
   s.date    = '2015-10-29'
   s.summary = 'Another calculator in ruby'
   s.description = 'An calculator implementation on ruby'
